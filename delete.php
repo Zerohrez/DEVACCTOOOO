@@ -7,7 +7,7 @@ $id = 2;
 $sql = "DELETE from siswa WHERE id = $id";
 
 if (mysqli_query($conn, $sql)) {
-    echo "Data berhasil dihapus";
+    echo "Data berhasil dihapus";h
 } else {
     echo "Error deleting record: " . mysqli_error($conn);
 }
