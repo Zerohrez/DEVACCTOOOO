@@ -1,15 +1,21 @@
 <?php
-include "koneksi.php";
+require "koneksi.php";
 //data yang diupdate
 $id = 2;
-$newEmail = "dimasnuri123@gmail.com";
+$newEmail = "hohohoho@gmail.com";
 
 //query update
-$sql = "UPDATE siswa SET email = '$newEmail' WHERE id = $id";
+$stmt = $conn->prepare("UPDATE siswa SET email = ? WHERE id = ?");
+$stmt->bind_param("si", $newEmail, $id);
 
-if (mysqli_query($conn, $sql)) {
-    echo "Data berhasil diupdate";
-} else {
-    echo "Error updating record: " . mysqli_error($conn);
+if($stmt->execute()){
+    if($stmt->affected_rows > 0){
+        echo "Data berhasil diupdate \n";
+    } else {
+        echo "Tidak ada data yang diupdate \n";
+    }
 }
+
+$stmt->close();
+$conn->close();
 ?>

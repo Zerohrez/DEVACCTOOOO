@@ -3,12 +3,17 @@ include "koneksi.php";
 //data yang di hapus
 $id = 2;
 
-//query delete
-$sql = "DELETE from siswa WHERE id = $id";
+$stmt = $conn->prepare("DELETE FROM siswa WHERE id = ?");
+$stmt->bind_param("i", $id);
 
-if (mysqli_query($conn, $sql)) {
-    echo "Data berhasil dihapus";
-} else {
-    echo "Error deleting record: " . mysqli_error($conn);
+if($stmt->execute()) {
+    if($stmt->affected_rows > 0){
+        echo "Data berhasil dihapus \n";
+    } else {
+        echo "Data gagal dihapus \n";
+    }
 }
+
+$stmt->close();
+$conn->close();
 ?>
