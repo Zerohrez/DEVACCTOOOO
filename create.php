@@ -2,15 +2,18 @@
 include "koneksi.php";
 
 //data yang dimasukkan
-$nama = "Dimasukin";
-$email = "dimasnuri@gmail.com";
+$nama = "Barakacuk";
+$email = "barakacuk@gmail.com";
 
-//query insert
-$sql = "INSERT INTO siswa (nama, email) VALUES ('$nama', '$email')";
+$stmt = $conn->prepare('INSERT INTO siswa (nama, email) VALUES (?, ?)');
+$stmt->bind_param("ss", $nama, $email);
 
-if($conn->query($sql)){
-    echo "Data berhasil ditambahkan";
+if($stmt->execute()) {
+    echo "Data berhasil ditambahkan. ID:" . $stmt->insert_id. "\n";
 } else {
-    echo "Error: " . $sql . mysqli_error($conn);
+    echo "Error:" . $stmt->error. "\n";
 }
+
+$stmt->close();
+$conn->close();
 ?>
